@@ -7,6 +7,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/dockerhub', function(req, res, next) {
+  //console.log(JSON.stringify(req));
+  var runScript = require('./runScript');
+  runScript(function(){
+      console.log('hook was handled');
+  });
   res.send('hook was handled');
 });
 
