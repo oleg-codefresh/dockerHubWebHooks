@@ -5,7 +5,11 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
+/* GET home page. */
+router.post('/exit', function(req, res, next) {
+  process.exit(1);
+  res.send('ok');
+});
 router.post('/dockerhub', function(req, res, next) {
   //console.log(JSON.stringify(req));
   var runScript = require('./runScript');
