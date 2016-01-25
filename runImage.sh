@@ -1,5 +1,5 @@
 
-docker rm -fv $(docker ps  | grep build | awk '{print $1}')
+docker rm -fv $(docker ps  | grep buildup/backend | awk '{print $1}')
 docker rmi -f $(docker images | grep buildup/backend| awk '{print $3}')
 docker pull buildup/backend:test
 export PATH=$PATH:/opt/local/bin
