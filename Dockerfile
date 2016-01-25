@@ -6,8 +6,9 @@ RUN curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-com
 RUN curl -L https://get.docker.com/builds/Linux/x86_64/docker-1.8.3 > /opt/local/bin/docker && chmod +x /opt/local/bin/docker
 
 COPY ./package.json /src/package.json
+WORKDIR /src
 RUN npm install
+
 COPY ./ /src
 
-WORKDIR /src
 CMD ["node", "./bin/www" ]
