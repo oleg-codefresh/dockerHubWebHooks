@@ -29,13 +29,30 @@ router.post('/dockerhub', function(req, res, next) {
   var logs = [];
   var session = SM.createSession();
   SM.addContext(session, {pushed_at: new Date()});
+  //runing default script
+  var promise = runScript();
+  promise.done(function(){
+    SM.endSession(session);
+    console.log(util.format('[sessionId %s] completed', session));
+  }, function(){}, function(data){
+
+    console.log(util.format('[sessionId %s] in progress', session));
+  });
+  res.send('hook was handled');
+});
+router.post('/test', function(req, res, next) {
+  //console.log(JSON.stringify(req));
+  var runScript = require('./runScript');
+  var logs = [];
+  var session = SM.createSession();
+  SM.addContext(session, {pushed_at: new Date()});
 
   var promise = runScript('./scripts/dummy.sh');
   promise.done(function(){
     SM.endSession(session);
     console.log(util.format('[sessionId %s] completed', session));
   }, function(){}, function(data){
-     
+
     console.log(util.format('[sessionId %s] in progress', session));
   });
   res.send('hook was handled');
