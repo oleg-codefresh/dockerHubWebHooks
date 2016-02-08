@@ -70,6 +70,10 @@ gulp.task('start:client', ['start:server', 'styles'], function () {
   openURL('http://localhost:9000');
 });
 
+gulp.task('test', function(done){
+  done();
+})
+
 gulp.task('start:server', function() {
   $.connect.server({
     root: [yeoman.app, '.tmp'],
