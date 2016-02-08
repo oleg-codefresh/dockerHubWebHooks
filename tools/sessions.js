@@ -10,29 +10,62 @@ var SM = function(){
 
 };
 
-SM.prototype.createSession  = function()
+var d =  {"push_data": {
+    "pushed_at": 1449017033,
+    "images": [],
+    "tag": "tag1",
+    "pusher": "biscarch"
+  }
+ }
+var index = 0;
+SM.prototype.createSession  = function(ctx)
 {
   var id = shortId();
-  this.addContext(id, {});
+  index++;
+  if (!ctx){
+
+    var o = _.clone(d);
+    o.pushed_at =  new Date();
+    o.pusher = o.pusher  + index;
+    ctx = o;
+}
+
+  //this.addContext(id, ctx);
   return id;
 };
-SM.prototype.addContext = function(sessionId, ctx)
-{
-  all[sessionId] = {ctx:ctx, status : 'inprogress'};
+
+SM.prototype.getAll = function(){
+  debug('getAll')
+  var ret = [];
+  _.mapKeys(all, function(value, key){
+    debug('value:'  + JSON.stringify(value));
+    return ret.push(value);
+  });
+
+  debug(JSON.stringify(ret));
+
+  return ret;
+};
+SM.prototype.clearAll = function(){
+  all = [];
+}
+SM.prototype.addContext = function(sessionId, ctx){
+  all[sessionId] = _.clone(ctx);
+  all[sessionId].status = 'inprogress';
   debug(util.format('session added key %j  value %j', sessionId, ctx));
   return sessionId;
 };
 SM.prototype.getContext = function(sessionId)
 {
   debug('get context for id ' + sessionId);
-  return all[sessionId].ctx;
+  return all[sessionId];
 };
 
 SM.prototype.endSession = function(sessionId){
   var session = all[sessionId];
   assert(session);
-
   session.status = 'done';
+
   return session;
 };
 

@@ -1,0 +1,37 @@
+<!<div class="jumbotron">
+  <h1>'Allo, 'Allo!</h1>
+  <p class="lead">
+    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
+    Always a pleasure scaffolding your apps.
+  </p>
+  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+</div>
+<!--
+"push_data": {
+   "pushed_at": 1449017033,
+   "images": [],
+   "tag": "newtag",
+   "pusher": "biscarch"
+}
+-->
+<div class="row marketing">
+  <h4>Codefresh Deployer</h4>
+  <table ng-table="main.tableParams" class="table table-condensed table-bordered table-striped">
+       <tr ng-repeat="entry in $data">
+         <td data-title="'#'">
+           <a target="_blank" ng-href="{{entry.sessionId}}">{{entry.sessionId}}</a>
+         </td>
+         <td data-title="'Pushed at'">{{entry.pushed_at}}</td>
+         <!--<td data-title="'Images'">{{entry.images}}</td>-->
+         <td data-title="'tag'">{{entry.tag}}</td>
+         <td data-title="'Pushed by'">
+           <a target="_blank"  >
+              {{entry.pusher}}
+          </a>
+         </td>
+         <td data-title="'Status'">
+        {{entry.status}}
+         </td>
+       </tr>
+     </table>
+</div>
