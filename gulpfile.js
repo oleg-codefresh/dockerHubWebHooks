@@ -113,7 +113,7 @@ gulp.task('watch', function () {
   gulp.watch('bower.json', ['bower']);
 });
 
-gulp.task('serve', function (cb) {
+gulp.task('serve',['bower'], function (cb) {
   runSequence('clean:tmp',
     ['lint:scripts'],
     ['start:client'],
