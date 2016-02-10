@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var shortId = require('shortId');
 var util    = require('util');
 var SM      = require('../tools/sessions');
 var debug   = require('debug')('index');
