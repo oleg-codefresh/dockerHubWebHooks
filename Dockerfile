@@ -7,10 +7,15 @@ RUN curl -L https://get.docker.com/builds/Linux/x86_64/docker-1.8.3 > /opt/local
 RUN npm install -g  gulp
 
 COPY ./package.json /src/package.json
+RUN npm install
+COPY ./bower.json  /src/bower.json
+RUN bower install
 WORKDIR /src
 RUN npm install
 
 
 COPY ./ /src
+
+
 
 CMD ["gulp ", "serve" ]
