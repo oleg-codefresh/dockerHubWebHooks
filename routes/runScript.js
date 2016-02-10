@@ -15,7 +15,7 @@ const dockerPull = function(script){
 
 
 
-  var cwd = path.resolve(__dirname, '../');
+  var cwd = path.resolve(__dirname, '../scripts');
   console.log('current dir is ' + cwd);
   var run = spawn('sh', [script] ,{"cwd": cwd});
 

@@ -50,6 +50,9 @@ SM.prototype.clearAll = function(){
   all = [];
 }
 SM.prototype.addContext = function(sessionId, ctx){
+  if (!ctx)
+  ctx = {}
+  
   all[sessionId] = _.clone(ctx);
   all[sessionId].status = 'inprogress';
   debug(util.format('session added key %j  value %j', sessionId, ctx));

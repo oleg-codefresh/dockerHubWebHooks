@@ -13,20 +13,6 @@ router.get('/index1', function(req, res, next) {
 router.get('/log', function(req, res ,next){
   console.log('get log');
 
-var data1 =  {"push_data": {
-    "pushed_at": 1449017033,
-    "images": [],
-    "tag": "tag1",
-    "pusher": "biscarch"
-  }
- }
- var data2 =  {"push_data": {
-     "pushed_at": 1449017033,
-     "images": [],
-     "tag": "tag2",
-     "pusher": "oleg"
-   }
-  }
  SM.createSession();
  debug(console.log(SM.getAll()));
  res.send(SM.getAll());
@@ -50,6 +36,7 @@ router.post('/dockerhub', function(req, res, next) {
   var sessionId = SM.createSession();
 
   debug('request' + util.format(req.body));
+  req.body.push_data.pushed_at = new Date();
   SM.addContext(sessionId, req.body.push_data);
   //runing default script
   var promise = runScript();
