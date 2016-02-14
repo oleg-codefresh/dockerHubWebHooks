@@ -6,14 +6,15 @@ RUN curl -L https://github.com/docker/compose/releases/download/1.4.2/docker-com
 RUN curl -L https://get.docker.com/builds/Linux/x86_64/docker-1.8.3 > /opt/local/bin/docker && chmod +x /opt/local/bin/docker
 RUN npm install -g  gulp
 
-COPY ./package.json package.json
-RUN npm install
-COPY ./bower.json  bower.json
-RUN echo '{ "allow_root": true }' > /root/.bowerrc
-RUN npm install -g bower
-RUN bower install
+#COPY ./package.json package.json
+#RUN npm install
+#COPY ./bower.json  bower.json
+#RUN echo '{ "allow_root": true }' > /root/.bowerrc
+#RUN npm install -g bower
+#RUN bower install
 WORKDIR /src
-RUN npm install
+#RUN npm install
+RUN npm install -g nodemon
 
 
 COPY ./ /src

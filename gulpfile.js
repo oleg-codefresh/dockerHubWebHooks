@@ -8,7 +8,11 @@ var lazypipe = require('lazypipe');
 var rimraf = require('rimraf');
 var wiredep = require('wiredep').stream;
 var runSequence = require('run-sequence');
+var bower = require('gulp-bower');
 
+gulp.task('bower-install', function() {
+  return bower();
+});
 var yeoman = {
   app: require('./bower.json').appPath || 'app',
   dist: 'dist'
@@ -120,7 +124,7 @@ gulp.task('serve',['bower'], function (cb) {
     'watch', cb);
 });
 
-gulp.task('serve:prod', function() {
+gulp.task('serve:prod',['bower-install'], function() {
   $.connect.server({
     root: [yeoman.dist],
     livereload: true,
@@ -202,4 +206,4 @@ gulp.task('build', ['clean:dist'], function () {
   runSequence(['images', 'copy:extras', 'copy:fonts', 'client:build']);
 });
 
-gulp.task('default', ['build']);
+gulp.task('default', ['serve:prod']);

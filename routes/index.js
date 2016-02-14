@@ -1,9 +1,12 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var util    = require('util');
 var SM      = require('../tools/sessions');
 var debug   = require('debug')('index');
-logs = {};
+var runScript = require('./runScript');
+
 /* GET home page. */
 router.get('/index1', function(req, res, next) {
   return res.render('index', { title: 'Deployer of DockerHub images' });
@@ -12,7 +15,6 @@ router.get('/index1', function(req, res, next) {
 router.get('/log', function(req, res ,next){
   console.log('get log');
 
- SM.createSession();
  debug(console.log(SM.getAll()));
  res.send(SM.getAll());
  return ;
@@ -28,9 +30,30 @@ router.post('/exit', function(req, res, next) {
   res.send('ok');
 });
 
+router.get('/run/:task', function(req, res){
+  var task = req.params.task + '.sh';
+  var promise = runScript(task);
+  var sessionId = SM.createSession();
+  promise.then(function(data){
+    console.log('requirest completed with data:' + data);
+    return res.send(200, data);
+  }, function(err){
+     console.log('err happend: ' + err);
+     return res.send(400, err);
+  }, function(progress){
+     console.log('progress:' + JSON.stringify(progress));
+
+  }).catch(function(){
+     res.send(400);
+  }).finally(function(){
+      SM.addContext(sessionId, {pushed_at : new Date()});
+      SM.endSession(sessionId);
+  })
+
+});
 router.post('/dockerhub', function(req, res, next) {
   console.log(JSON.stringify(req.body));
-  var runScript = require('./runScript');
+
   var logs = [];
   var sessionId = SM.createSession();
 

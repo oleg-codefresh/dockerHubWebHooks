@@ -6,7 +6,7 @@ const path = require('path');
 var Q = require ('q');
 var debug = require('debug')('run script');
 
-const dockerPull = function(script){
+const run = function(script){
   debug('running script ' + script);
 
   var defer = Q.defer();
@@ -18,13 +18,14 @@ const dockerPull = function(script){
   var cwd = path.resolve(__dirname, '../scripts');
   console.log('current dir is ' + cwd);
   var run = spawn('sh', [script] ,{"cwd": cwd});
-
+  var returnData='';
 
 
 run.stdout.on('data', (data) => {
   var buf = new Buffer(data);
   var str = buf.toString('utf-8');
-  defer.notify({src:'stdout', event:'newData'});
+  returnData  += str;
+  defer.notify({src:'stdout', event:'newData', data:returnData});
   console.log(str);
 });
 
@@ -32,7 +33,7 @@ run.stderr.on('data', (data) => {
   var buf = new Buffer(data);
   var str = buf.toString('utf-8');
   console.log('stderr:' + str);
-  defer.notify({src:'stderr', event:'newData'});
+  defer.notify({src:'stderr', event:'newData', data:str});
 });
 
  run.on('close', (code) => {
@@ -42,7 +43,7 @@ run.stderr.on('data', (data) => {
     return defer.reject(code);
   }
 
-   return defer.resolve();
+   return defer.resolve(returnData);
 
 });
 
@@ -50,4 +51,4 @@ return defer.promise;
 
 };
 
-module.exports = dockerPull;
+module.exports = run;
