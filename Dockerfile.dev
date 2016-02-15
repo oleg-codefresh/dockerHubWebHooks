@@ -19,6 +19,4 @@ RUN npm install -g nodemon
 
 COPY ./ /src
 
-
-
-CMD ["gulp ", "serve:prod" ]
+CMD ["node_modules/gulp/bin/gulp.js", "serve:prod"]
