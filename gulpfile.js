@@ -82,6 +82,7 @@ gulp.task('start:server', function() {
   $.connect.server({
     root: [yeoman.app, '.tmp'],
     livereload: true,
+    host:'0.0.0.0',
     // Change this to '0.0.0.0' to access the server from outside.
     port: 9000
   });
