@@ -9,6 +9,7 @@ var rimraf = require('rimraf');
 var wiredep = require('wiredep').stream;
 var runSequence = require('run-sequence');
 var bower = require('gulp-bower');
+var shell = require('gulp-shell');
 
 gulp.task('bower-install', function() {
   return bower();
@@ -134,6 +135,11 @@ gulp.task('serve:prod',['bower-install'], function() {
   });
 });
 
+gulp.task('runapp',['bower-install'] ,shell.task([
+  'node ./bin/www',
+  'echo app started'
+]));
+
 gulp.task('test', ['start:server:test'], function () {
   var testToFiles = paths.testRequire.concat(paths.scripts, paths.test);
   return gulp.src(testToFiles)
@@ -208,4 +214,4 @@ gulp.task('build', ['clean:dist'], function () {
   runSequence(['images', 'copy:extras', 'copy:fonts', 'client:build']);
 });
 
-gulp.task('default', ['serve:prod']);
+gulp.task('default', ['runapp']);
