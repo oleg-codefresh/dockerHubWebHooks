@@ -128,6 +128,7 @@ gulp.task('serve:prod',['bower-install'], function() {
   $.connect.server({
     root: [yeoman.dist],
     livereload: true,
+    host:'0.0.0.0',
     port: 9000
   });
 });
