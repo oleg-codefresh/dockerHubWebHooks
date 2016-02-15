@@ -6,6 +6,7 @@ var util    = require('util');
 var SM      = require('../tools/sessions');
 var debug   = require('debug')('index');
 var runScript = require('./runScript');
+var assert = require('assert');
 
 /* GET home page. */
 router.get('/index1', function(req, res, next) {
@@ -30,7 +31,33 @@ router.post('/exit', function(req, res, next) {
   res.send('ok');
 });
 
+router.get('/dockerfile/:type?', function(req, res, next) {
+
+     var config = require('../config');
+
+     var type = req.params.type || '';
+     console.log('type is:'  + type);
+
+     var file = config['dockerfile' + type];
+
+     var path = require('path');
+     var fs   = require('fs');
+
+     var file = path.resolve('./', file );
+
+     fs.readFile(file, 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log(data);
+          res.send(200, data);
+      });
+
+});
+
+
 router.get('/run/:task', function(req, res){
+
   var task = req.params.task + '.sh';
   var promise = runScript(task);
   var sessionId = SM.createSession();
