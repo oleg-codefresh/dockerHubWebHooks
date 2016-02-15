@@ -80,7 +80,7 @@ gulp.task('test', function(done){
 
 gulp.task('start:server', function() {
   $.connect.server({
-    root: [yeoman.app, '.tmp'],
+    root: [yeoman.app],
     livereload: true,
     host:'0.0.0.0',
     // Change this to '0.0.0.0' to access the server from outside.
@@ -90,7 +90,7 @@ gulp.task('start:server', function() {
 
 gulp.task('start:server:test', function() {
   $.connect.server({
-    root: ['test', yeoman.app, '.tmp'],
+    root: ['test', yeoman.app],
     livereload: true,
     port: 9001
   });
@@ -118,7 +118,7 @@ gulp.task('watch', function () {
   gulp.watch('bower.json', ['bower']);
 });
 
-gulp.task('serve',['bower'], function (cb) {
+gulp.task('serve',['bower-install'], function (cb) {
   runSequence('clean:tmp',
     ['lint:scripts'],
     ['start:client'],
