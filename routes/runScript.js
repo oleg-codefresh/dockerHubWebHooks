@@ -14,7 +14,7 @@ const run = function(script, env){
 
   var defer = Q.defer();
   if (!script)
-   script = './runImage.sh';
+   script = './redeploy.sh';
 
 
   var cwd = path.resolve(__dirname, '../scripts');
