@@ -33,6 +33,7 @@
     "jade": "~1.11.0",
     "jshint-stylish": "^1.0.0",
     "lazypipe": "^0.2.4",
+    "lodash": "^4.5.0",
     "morgan": "~1.6.1",
     "open": "0.0.5",
     "rimraf": "^2.4.0",
