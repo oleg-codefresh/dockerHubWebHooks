@@ -1,8 +1,8 @@
 backend:
    image : buildup/backend:test
    ports:
-      - 80
+      - 80:80
 deployer:
   image: buildup/deployer:add_session
   ports:
-    - 3000
+    - 7777:3000
