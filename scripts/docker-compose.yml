@@ -1,7 +1,3 @@
-deployer:
-   image : buildup/deployer:add_session
-   ports:
-     - 3000
 backend:
    image : buildup/backend:test
    ports:
