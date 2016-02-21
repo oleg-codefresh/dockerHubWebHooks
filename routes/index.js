@@ -61,11 +61,12 @@ router.get('/run/:task', function(req, res){
   var task = req.params.task + '.sh';
   var promise = runScript(task);
   var sessionId = SM.createSession();
+
   promise.then(function(data){
     console.log('requirest completed with data:' + data);
     return res.send(200, data);
   }, function(err){
-     console.log('err happend: ' + err);
+     console.log('err happend: ' + JSON.stringify(err));
      return res.send(400, err);
   }, function(progress){
      console.log('progress:' + JSON.stringify(progress));
@@ -88,7 +89,7 @@ router.post('/dockerhub', function(req, res, next) {
   req.body.push_data.pushed_at = new Date();
   SM.addContext(sessionId, req.body.push_data);
   //runing default script
-  var promise = runScript();
+  var promise = runScript('run-compose.sh');
   promise.then(function(){
 
     console.log(util.format('[sessionId %s] completed', sessionId));
