@@ -20,4 +20,4 @@ COPY ./ /src
 
 
 
-CMD ["gulp ", "serve:prod" ]
+CMD ["./node_modules/.bin/gulp", "runapp"]
